@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './global.css'
 import { worker } from './mocks/browser.ts'
 import App from './App.tsx'
+import '@/global.css'
 
 worker.start()
 
