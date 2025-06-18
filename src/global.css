@@ -102,10 +102,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+    max-width: 1280px;    
+    padding: 2rem;    
+    height: 100vh;
+    width: 100%;
   }
 }
 
