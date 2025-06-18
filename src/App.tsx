@@ -1,7 +1,16 @@
-import './global.css'
+import Todo from '@/app/todo'
+import Layout from '@/components/layout'
+import '@/global.css'
+import QueryClientProvider from '@/lib/reactQuery/QueryClientProvider'
 
 function App() {
-  return <div>이곳에 To-Do App을 작성해주세요.</div>
+  return (
+    <QueryClientProvider>
+      <Layout>
+        <Todo />
+      </Layout>
+    </QueryClientProvider>
+  )
 }
 
 export default App
