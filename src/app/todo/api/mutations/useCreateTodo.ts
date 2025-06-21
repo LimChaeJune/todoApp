@@ -1,18 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
-import createTodo from '@/app/todo/api/fetch/createTodo'
-import { TodoRequest } from '@/app/todo/types'
-import { useQueryClient } from '@tanstack/react-query'
+import createTodo from '@/app/todo/api/endpoints/createTodo'
 
 const useCreateTodo = () => {
-  const queryClient = useQueryClient()
-
   return useMutation({
-    mutationFn: ({ payload }: { payload: TodoRequest }) => {
-      return createTodo(payload)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todo'] })
-    },
+    mutationKey: ['todo'],
+    mutationFn: createTodo,
   })
 }
 export default useCreateTodo

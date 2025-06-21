@@ -14,7 +14,7 @@ interface DataTableProps<TData> {
   table: ReactTable<TData>
 }
 
-export function DataTable<TData>({ table }: DataTableProps<TData>) {
+function DataTable<TData>({ table }: DataTableProps<TData>) {
   return (
     <div className="rounded-md border">
       <Table>
@@ -42,6 +42,8 @@ export function DataTable<TData>({ table }: DataTableProps<TData>) {
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
+                onClick={() => row.toggleSelected()}
+                className="cursor-pointer"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -65,3 +67,5 @@ export function DataTable<TData>({ table }: DataTableProps<TData>) {
     </div>
   )
 }
+
+export default DataTable
