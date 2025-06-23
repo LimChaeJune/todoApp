@@ -1,11 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Todo } from '@/app/todo/types'
 import SelectColumnCell from '@/components/ui/dataTable/SelectColumnCell'
-import { TodoDoneCell } from '@/app/todo/components/todoDataGrid/TodoDoneCell'
-import { TodoActionCell } from '@/app/todo/components/todoDataGrid/TodoActionCell'
+import TodoDoneCell from '@/app/todo/components/todoDataGrid/TodoDoneCell'
+import TodoActionCell from '@/app/todo/components/todoDataGrid/TodoActionCell'
 import { Badge } from '@/components/ui/Badge'
 
-export const todoListColumns: ColumnDef<Todo>[] = [
+export const columns: ColumnDef<Todo>[] = [
   SelectColumnCell<Todo>(),
   {
     accessorKey: 'text',

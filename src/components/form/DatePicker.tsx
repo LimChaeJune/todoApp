@@ -18,12 +18,12 @@ interface DatePickerProps {
   >
 }
 
-function DatePicker({
+const DatePicker = ({
   value,
   onChange,
   buttonProps = {},
   calendarProps = {},
-}: DatePickerProps) {
+}: DatePickerProps) => {
   const selectedDate = value || new Date()
 
   const handleSelect = (date: Date | undefined) => {

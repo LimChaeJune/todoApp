@@ -1,7 +1,7 @@
 import { Checkbox } from '@/components/ui/Checkbox'
 import { ColumnDef } from '@tanstack/react-table'
 
-function SelectColumnCell<T>(): ColumnDef<T> {
+const SelectColumnCell = <T extends object>(): ColumnDef<T> => {
   return {
     id: 'select',
     header: ({ table }) => (

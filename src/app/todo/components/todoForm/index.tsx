@@ -3,7 +3,7 @@ import DatePicker from '@/components/form/DatePicker'
 import { Input } from '@/components/ui/Input'
 import { Controller } from 'react-hook-form'
 import FormErrors from '@/components/form/FormErrors'
-import { useTodoForm } from '../../hooks/useTodoForm'
+import useTodoForm from '@/app/todo/hooks/useTodoForm'
 
 const TodoForm = () => {
   const { control, onSubmit, errors } = useTodoForm()
@@ -19,6 +19,7 @@ const TodoForm = () => {
           name="text"
           render={({ field }) => (
             <Input
+              aria-label="Add a new todo"
               placeholder="Add a new todo"
               type="text"
               minLength={1}

@@ -14,7 +14,7 @@ interface DataTableProps<TData> {
   table: ReactTable<TData>
 }
 
-function DataTable<TData>({ table }: DataTableProps<TData>) {
+const DataTable = <TData extends object>({ table }: DataTableProps<TData>) => {
   return (
     <div className="rounded-md border">
       <Table>

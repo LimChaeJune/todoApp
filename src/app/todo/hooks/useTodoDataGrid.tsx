@@ -6,10 +6,10 @@ import {
   RowSelectionState,
   useReactTable,
 } from '@tanstack/react-table'
-import { todoListColumns } from '../constants/table'
 import { useState } from 'react'
-import { Todo } from '../types'
-import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { Todo } from '@/app/todo/types'
+import { columns } from '@/app/todo/constants/table'
+import useLocalStorage from '@/hooks/useLocalStorage'
 
 const useTodoDataGrid = (todoList: Todo[]) => {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -20,7 +20,7 @@ const useTodoDataGrid = (todoList: Todo[]) => {
 
   const table = useReactTable({
     data: todoList ?? [],
-    columns: todoListColumns,
+    columns: columns,
     state: {
       rowSelection,
       columnFilters,

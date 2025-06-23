@@ -1,5 +1,5 @@
 import TodoDataGrid from '@/app/todo/components/todoDataGrid'
-import TodoForm from './components/todoForm'
+import TodoForm from '@/app/todo/components/todoForm'
 
 const Todo = () => {
   return (

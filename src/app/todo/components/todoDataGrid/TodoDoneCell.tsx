@@ -1,14 +1,14 @@
 import { Button } from '@/components/ui/Button'
+import { type Todo } from '@/app/todo/types'
+import useUpdateTodo from '@/app/todo/api/mutations/useUpdateTodo'
 import { Check } from 'lucide-react'
-import { type Todo } from '../../types'
-import useUpdateTodo from '../../api/mutations/useUpdateTodo'
 import { cn } from '@/lib/utils'
 
 interface TodoDoneCellProps {
   todo: Todo
 }
 
-export function TodoDoneCell({ todo }: TodoDoneCellProps) {
+const TodoDoneCell = ({ todo }: TodoDoneCellProps) => {
   const { mutate: updateTodo, isPending } = useUpdateTodo()
 
   const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,3 +37,5 @@ export function TodoDoneCell({ todo }: TodoDoneCellProps) {
     </div>
   )
 }
+
+export default TodoDoneCell

@@ -13,7 +13,7 @@ interface TodoActionCellProps {
   todo: Todo
 }
 
-export function TodoActionCell({ todo }: TodoActionCellProps) {
+const TodoActionCell = ({ todo }: TodoActionCellProps) => {
   const editTrigger = (
     <DropdownMenuItem
       className="text-blue-500 focus:text-blue-500"
@@ -37,3 +37,5 @@ export function TodoActionCell({ todo }: TodoActionCellProps) {
     </DropdownMenu>
   )
 }
+
+export default TodoActionCell

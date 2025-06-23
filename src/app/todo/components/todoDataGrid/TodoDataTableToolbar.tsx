@@ -1,16 +1,16 @@
 import { Table } from '@tanstack/react-table'
 import { Button } from '@/components/ui/Button'
 import { Trash2 } from 'lucide-react'
-import useDeleteTodo from '../../api/mutations/useDeleteTodo'
-import { TodoDeleteDialog } from '../dialog/TodoDeleteDialog'
+import useDeleteTodo from '@/app/todo/api/mutations/useDeleteTodo'
+import TodoDeleteDialog from '@/app/todo/components/dialog/TodoDeleteDialog'
 
 interface TodoDataTableToolbarProps<TData> {
   table: Table<TData>
 }
 
-export function TodoDataTableToolbar<TData>({
+const TodoDataTableToolbar = <TData extends object>({
   table,
-}: TodoDataTableToolbarProps<TData>) {
+}: TodoDataTableToolbarProps<TData>) => {
   const numSelected = table.getSelectedRowModel().rows.length
   const { isPending } = useDeleteTodo()
 
@@ -26,3 +26,5 @@ export function TodoDataTableToolbar<TData>({
     />
   )
 }
+
+export default TodoDataTableToolbar

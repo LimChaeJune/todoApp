@@ -2,7 +2,7 @@ import { Table } from '@tanstack/react-table'
 import { Button } from '@/components/ui/Button'
 import { Trash2 } from 'lucide-react'
 import useDeleteTodo from '../../api/mutations/useDeleteTodo'
-import { Todo } from '../../types'
+import { Todo } from '@/app/todo/types'
 import {
   Dialog,
   DialogTitle,
@@ -19,9 +19,7 @@ interface TodoDeleteDialogProps<TData> {
   trigger: React.ReactNode
 }
 
-export function TodoDeleteDialog<TData>({
-  table,
-}: TodoDeleteDialogProps<TData>) {
+function TodoDeleteDialog<TData>({ table }: TodoDeleteDialogProps<TData>) {
   const numSelected = table.getSelectedRowModel().rows.length
   const { mutate: deleteTodos, isPending } = useDeleteTodo()
 
@@ -67,3 +65,5 @@ export function TodoDeleteDialog<TData>({
     </div>
   )
 }
+
+export default TodoDeleteDialog

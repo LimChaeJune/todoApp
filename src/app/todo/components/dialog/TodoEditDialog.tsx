@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import {
   Dialog,
@@ -8,13 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/Dialog'
-import { Todo } from '../../types'
-import { useTodoForm } from '../../hooks/useTodoForm'
+import { Todo } from '@/app/todo/types'
 import { Controller } from 'react-hook-form'
 import { Input } from '@/components/ui/Input'
 import FormErrors from '@/components/form/FormErrors'
+import useTodoForm from '@/app/todo/hooks/useTodoForm'
 import DatePicker from '@/components/form/DatePicker'
-import { useState } from 'react'
 
 interface TodoEditDialogProps {
   trigger: React.ReactNode
@@ -34,7 +34,9 @@ const TodoEditDialog = ({ trigger, todo }: TodoEditDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent onClick={(e) => e.stopPropagation()}>
+      <DialogContent
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+      >
         <DialogHeader>
           <DialogTitle>Edit Todo</DialogTitle>
           <DialogDescription>
@@ -49,9 +51,10 @@ const TodoEditDialog = ({ trigger, todo }: TodoEditDialogProps) => {
               <Input
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
-                placeholder="Edit todo"
                 type="text"
                 minLength={1}
+                placeholder="Edit todo"
+                aria-label="Edit todo"
               />
             )}
           />
@@ -67,10 +70,10 @@ const TodoEditDialog = ({ trigger, todo }: TodoEditDialogProps) => {
             )}
           />
           <FormErrors errors={errors} />
+          <DialogFooter>
+            <Button type="submit">Edit</Button>
+          </DialogFooter>
         </form>
-        <DialogFooter>
-          <Button type="submit">Edit</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

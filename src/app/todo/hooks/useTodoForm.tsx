@@ -9,7 +9,7 @@ interface UseTodoFormProps {
   onSuccess?: () => void
 }
 
-export const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
+const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
   const { mutate: createTodo } = useCreateTodo()
   const { mutate: updateTodo } = useUpdateTodo()
 
@@ -42,7 +42,7 @@ export const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
             reset()
             onSuccess?.()
           },
-        }
+        },
       )
     } else {
       createTodo(
@@ -56,10 +56,12 @@ export const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
             reset()
             onSuccess?.()
           },
-        }
+        },
       )
     }
   }
 
   return { control, errors, onSubmit: handleSubmit(onSubmit) }
 }
+
+export default useTodoForm

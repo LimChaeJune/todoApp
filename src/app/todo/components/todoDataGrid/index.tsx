@@ -2,10 +2,10 @@ import BaseDataTable from '@/components/ui/dataTable/DataTable'
 import DataTablePagination from '@/components/ui/dataTable/DataTablePagination'
 import useTodoList from '@/app/todo/api/quries/useTodoList'
 import DataTableFilter from '@/components/ui/dataTable/DataTableFilter'
-import useTodoDataGrid from '../../hooks/useTodoDataGrid'
-import { TodoDataTableToolbar } from './TodoDataTableToolbar'
+import useTodoDataGrid from '@/app/todo/hooks/useTodoDataGrid'
+import TodoDataTableToolbar from '@/app/todo/components/todoDataGrid/TodoDataTableToolbar'
 
-function TodoDataGrid() {
+const TodoDataGrid = () => {
   const { data: todoList } = useTodoList()
   const table = useTodoDataGrid(todoList ?? [])
 

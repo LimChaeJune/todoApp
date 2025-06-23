@@ -9,12 +9,12 @@ interface DataTableFilterProps<TData> {
   className?: string
 }
 
-function DataTableFilter<TData>({
+const DataTableFilter = <TData extends object>({
   table,
   placeholder = 'Filter by...',
   column,
   className,
-}: DataTableFilterProps<TData>) {
+}: DataTableFilterProps<TData>) => {
   return (
     <div className={cn('flex items-center py-4', className)}>
       <Input
