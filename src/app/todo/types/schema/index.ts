@@ -1,15 +1,6 @@
 import * as z from 'zod'
 
-export type Todo = {
-  id: number
-  text: string
-  done: boolean
-  deadline: number
-}
-
-export type TodoRequest = Omit<Todo, 'id'>
-
-export const todoInputSchema = z.object({
+export const todoFormSchema = z.object({
   text: z.string().min(1, { message: 'Todo text is required' }),
   deadline: z.date().refine(
     (date) => {
@@ -21,4 +12,4 @@ export const todoInputSchema = z.object({
   ),
 })
 
-export type TodoInputSchema = z.infer<typeof todoInputSchema>
+export type TodoFormSchema = z.infer<typeof todoFormSchema>

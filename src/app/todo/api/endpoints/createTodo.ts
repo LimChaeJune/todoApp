@@ -1,11 +1,13 @@
 import ky from 'ky'
-import { Todo, TodoRequest } from '@/app/todo/types'
 import { APIResponse } from '@/types/api'
+import { TodoRequestDto, TodoResponseDto } from '@/app/todo/api/dtos'
 
-const createTodo = async (todo: TodoRequest): Promise<APIResponse<Todo>> => {
+const createTodo = async (
+  todo: TodoRequestDto
+): Promise<APIResponse<TodoResponseDto>> => {
   const response = await ky
     .post('/api/todos', { json: todo })
-    .json<APIResponse<Todo>>()
+    .json<APIResponse<TodoResponseDto>>()
 
   return response
 }

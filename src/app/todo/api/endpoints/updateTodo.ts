@@ -1,14 +1,14 @@
 import ky from 'ky'
-import { Todo, TodoRequest } from '@/app/todo/types'
 import { APIResponse } from '@/types/api'
+import { TodoRequestDto, TodoResponseDto } from '@/app/todo/api/dtos'
 
 const updateTodo = async (
   id: number,
-  todo: TodoRequest
-): Promise<APIResponse<Todo>> => {
+  todo: TodoRequestDto
+): Promise<APIResponse<TodoResponseDto>> => {
   const response = await ky
     .put(`/api/todos/${id}`, { json: todo })
-    .json<APIResponse<Todo>>()
+    .json<APIResponse<TodoResponseDto>>()
 
   return response
 }

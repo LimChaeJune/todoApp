@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import getTodo from '../endpoints/getTodo'
+import getTodo from '@/app/todo/api/endpoints/getTodo'
 import { APIResponse } from '@/types/api'
-import { Todo } from '@/app/todo/types'
+import { Todo } from '@/app/todo/types/model'
 
 const useTodoList = () => {
   const query = useQuery<APIResponse<Todo[]>, Error, Todo[]>({

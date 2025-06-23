@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/Dialog'
-import { Todo } from '@/app/todo/types'
+import { Todo } from '@/app/todo/types/model'
 import { Controller } from 'react-hook-form'
 import { Input } from '@/components/ui/Input'
 import FormErrors from '@/components/form/FormErrors'

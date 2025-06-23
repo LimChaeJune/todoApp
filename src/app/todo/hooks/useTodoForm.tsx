@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { todoInputSchema, TodoInputSchema, Todo } from '@/app/todo/types'
+import { TodoFormSchema, todoFormSchema } from '@/app/todo/types/schema'
 import useCreateTodo from '@/app/todo/api/mutations/useCreateTodo'
 import useUpdateTodo from '@/app/todo/api/mutations/useUpdateTodo'
+import { Todo } from '@/app/todo/types/model'
 
 interface UseTodoFormProps {
   todo?: Todo
@@ -18,15 +19,20 @@ const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<TodoInputSchema>({
+  } = useForm<TodoFormSchema>({
     defaultValues: {
       text: todo?.text ?? '',
       deadline: todo?.deadline ? new Date(todo.deadline) : new Date(),
     },
-    resolver: zodResolver(todoInputSchema),
+    resolver: zodResolver(todoFormSchema),
   })
 
-  const onSubmit = (data: TodoInputSchema) => {
+  const onSubmit = (data: TodoFormSchema) => {
+    const handleSuccess = () => {
+      reset()
+      onSuccess?.()
+    }
+
     if (todo) {
       updateTodo(
         {
@@ -38,11 +44,8 @@ const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
           },
         },
         {
-          onSuccess: () => {
-            reset()
-            onSuccess?.()
-          },
-        },
+          onSuccess: handleSuccess,
+        }
       )
     } else {
       createTodo(
@@ -52,11 +55,8 @@ const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
           deadline: data.deadline.getTime(),
         },
         {
-          onSuccess: () => {
-            reset()
-            onSuccess?.()
-          },
-        },
+          onSuccess: handleSuccess,
+        }
       )
     }
   }

@@ -1,8 +1,8 @@
 import { Table } from '@tanstack/react-table'
 import { Button } from '@/components/ui/Button'
 import { Trash2 } from 'lucide-react'
-import useDeleteTodo from '../../api/mutations/useDeleteTodo'
-import { Todo } from '@/app/todo/types'
+import useDeleteTodo from '@/app/todo/api/mutations/useDeleteTodo'
+import { Todo } from '@/app/todo/types/model'
 import {
   Dialog,
   DialogTitle,
@@ -54,7 +54,7 @@ function TodoDeleteDialog<TData>({ table }: TodoDeleteDialogProps<TData>) {
               {numSelected} todo(s).
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="gap-4">
             <DialogClose>Cancel</DialogClose>
             <Button onClick={handleDelete} disabled={isPending}>
               {isPending ? 'Deleting...' : 'Delete'}

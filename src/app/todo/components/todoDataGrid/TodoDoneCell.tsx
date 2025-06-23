@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/Button'
-import { type Todo } from '@/app/todo/types'
-import useUpdateTodo from '@/app/todo/api/mutations/useUpdateTodo'
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/Button'
+import { Todo } from '@/app/todo/types/model'
+import useUpdateTodo from '@/app/todo/api/mutations/useUpdateTodo'
 
 interface TodoDoneCellProps {
   todo: Todo

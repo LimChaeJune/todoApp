@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/DropDown'
 import { Button } from '@/components/ui/Button'
 import { MoreHorizontal } from 'lucide-react'
-import { type Todo } from '../../types'
+import { Todo } from '@/app/todo/types/model'
 import TodoEditDialog from '../dialog/TodoEditDialog'
 
 interface TodoActionCellProps {

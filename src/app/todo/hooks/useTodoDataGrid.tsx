@@ -7,7 +7,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { Todo } from '@/app/todo/types'
+import { Todo } from '@/app/todo/types/model'
 import { columns } from '@/app/todo/constants/table'
 import useLocalStorage from '@/hooks/useLocalStorage'
 

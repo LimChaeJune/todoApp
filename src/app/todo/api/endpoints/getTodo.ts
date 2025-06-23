@@ -1,9 +1,11 @@
 import ky from 'ky'
-import { Todo } from '@/app/todo/types'
 import { APIResponse } from '@/types/api'
+import { TodoResponseDto } from '@/app/todo/api/dtos'
 
-const getTodo = async (): Promise<APIResponse<Todo[]>> => {
-  const response = await ky.get('/api/todos').json<APIResponse<Todo[]>>()
+const getTodo = async (): Promise<APIResponse<TodoResponseDto[]>> => {
+  const response = await ky
+    .get('/api/todos')
+    .json<APIResponse<TodoResponseDto[]>>()
 
   return response
 }
