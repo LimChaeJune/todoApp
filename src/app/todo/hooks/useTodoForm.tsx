@@ -18,6 +18,7 @@ const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<TodoFormSchema>({
     defaultValues: {
@@ -61,7 +62,7 @@ const useTodoForm = ({ todo, onSuccess }: UseTodoFormProps = {}) => {
     }
   }
 
-  return { control, errors, onSubmit: handleSubmit(onSubmit) }
+  return { control, errors, onSubmit: handleSubmit(onSubmit), setValue }
 }
 
 export default useTodoForm

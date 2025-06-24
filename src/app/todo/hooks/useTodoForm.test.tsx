@@ -73,20 +73,14 @@ describe('useTodoForm', () => {
     })
   })
 
-  it('should call createTodo when submitting new todo', async () => {
-    const onSuccess = vi.fn()
-
-    const { result } = renderHook(() => useTodoForm({ onSuccess }), {
+  it('should show validation error when text is empty', async () => {
+    const { result } = renderHook(() => useTodoForm(), {
       wrapper: createWrapper(),
     })
 
     await act(async () => {
-      result.current.control.register('deadline', {
-        value: new Date(),
-      })
-      result.current.control.register('text', {
-        value: 'New todo',
-      })
+      result.current.setValue('text', '', { shouldValidate: true })
+      result.current.setValue('deadline', new Date(), { shouldValidate: true })
     })
 
     await act(async () => {
@@ -94,11 +88,67 @@ describe('useTodoForm', () => {
       await result.current.onSubmit(mockEvent)
     })
 
-    console.log('useCreateTodo mock result:', useCreateTodo())
-    console.log('createTodo function:', result.current.control._formState)
-    console.log('mockCreateTodo calls:', mockCreateTodo.mock.calls.length)
+    expect(result.current.errors.text).toBeDefined()
+    expect(mockCreateTodo).toHaveBeenCalledTimes(0)
+  })
 
-    expect(mockCreateTodo).toHaveBeenCalledTimes(1)
+  it('should show validation error when deadline is in the past', async () => {
+    const { result } = renderHook(() => useTodoForm(), {
+      wrapper: createWrapper(),
+    })
+
+    await act(async () => {
+      result.current.setValue('text', 'a', {
+        shouldValidate: true,
+      })
+      result.current.setValue(
+        'deadline',
+        new Date(Date.now() - 24 * 60 * 60 * 1000),
+        {
+          shouldValidate: true,
+        }
+      )
+    })
+
+    await act(async () => {
+      const mockEvent = { preventDefault: vi.fn() } as any
+      await result.current.onSubmit(mockEvent)
+    })
+
+    expect(result.current.errors.deadline).toBeDefined()
+    expect(mockCreateTodo).toHaveBeenCalledTimes(0)
+  })
+
+  it('should call createTodo when submitting new todo', async () => {
+    const onSuccess = vi.fn()
+
+    const { result } = renderHook(() => useTodoForm({ onSuccess }), {
+      wrapper: createWrapper(),
+    })
+
+    const deadline = new Date()
+    const text = 'New todo'
+
+    await act(async () => {
+      result.current.setValue('deadline', deadline)
+      result.current.setValue('text', text)
+    })
+
+    await act(async () => {
+      const mockEvent = { preventDefault: vi.fn() } as any
+      await result.current.onSubmit(mockEvent)
+    })
+
+    expect(mockCreateTodo).toHaveBeenCalledWith(
+      {
+        done: false,
+        text,
+        deadline: deadline.getTime(),
+      },
+      {
+        onSuccess: expect.any(Function),
+      }
+    )
   })
 
   it('should call updateTodo when submitting existing todo', async () => {
@@ -110,27 +160,32 @@ describe('useTodoForm', () => {
     } as Todo
 
     const onSuccess = vi.fn()
+
     const { result } = renderHook(
       () => useTodoForm({ todo: existingTodo, onSuccess }),
       { wrapper: createWrapper() }
     )
 
-    const formData = {
-      text: 'Updated todo',
-      deadline: new Date('2024-12-25'),
-    }
+    const deadline = new Date()
+    const text = 'Updated todo'
 
     await act(async () => {
-      result.current.onSubmit(formData as any)
+      result.current.setValue('deadline', deadline)
+      result.current.setValue('text', text)
+    })
+
+    await act(async () => {
+      const mockEvent = { preventDefault: vi.fn() } as any
+      await result.current.onSubmit(mockEvent)
     })
 
     expect(mockUpdateTodo).toHaveBeenCalledWith(
       {
-        id: '1',
+        id: 1,
         todo: {
           done: false,
-          text: 'Updated todo',
-          deadline: new Date('2024-12-25').getTime(),
+          text,
+          deadline: deadline.getTime(),
         },
       },
       {
@@ -156,7 +211,13 @@ describe('useTodoForm', () => {
     }
 
     await act(async () => {
-      result.current.onSubmit(formData as any)
+      result.current.setValue('deadline', formData.deadline)
+      result.current.setValue('text', formData.text)
+    })
+
+    await act(async () => {
+      const mockEvent = { preventDefault: vi.fn() } as any
+      await result.current.onSubmit(mockEvent)
     })
 
     expect(onSuccess).toHaveBeenCalled()
@@ -172,7 +233,6 @@ describe('useTodoForm', () => {
 
     const onSuccess = vi.fn()
 
-    // updateTodo가 성공했을 때 onSuccess 콜백이 즉시 실행되도록 모킹
     mockUpdateTodo.mockImplementation((data, options) => {
       options.onSuccess()
     })
@@ -188,7 +248,13 @@ describe('useTodoForm', () => {
     }
 
     await act(async () => {
-      result.current.onSubmit(formData as any)
+      result.current.setValue('deadline', formData.deadline)
+      result.current.setValue('text', formData.text)
+    })
+
+    await act(async () => {
+      const mockEvent = { preventDefault: vi.fn() } as any
+      await result.current.onSubmit(mockEvent)
     })
 
     expect(onSuccess).toHaveBeenCalled()
