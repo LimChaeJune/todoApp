@@ -21,5 +21,13 @@
   "vueIndentScriptAndStyle": false,
   "experimentalTernaries": false,
   "filepath": "/Users/roychoi/Documents/test/todo-app/src/mocks/handler.ts",
-  "parser": "typescript"
+  "parser": "typescript",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "parser": "markdown"
+      }
+    }
+  ],
 }
