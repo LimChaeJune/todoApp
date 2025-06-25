@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/Table'
 
-interface DataTableProps<TData> {
+export interface DataTableProps<TData> {
   table: ReactTable<TData>
 }
 

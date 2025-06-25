@@ -1,7 +1,7 @@
-import BaseDataTable from '@/components/ui/dataTable/DataTable'
-import DataTablePagination from '@/components/ui/dataTable/DataTablePagination'
+import BaseDataTable from '@/components/ui/DataTable/DataTable'
+import DataTablePagination from '@/components/ui/DataTable/DataTablePagination'
 import useTodoList from '@/app/todo/api/quries/useTodoList'
-import DataTableFilter from '@/components/ui/dataTable/DataTableFilter'
+import DataTableFilter from '@/components/ui/DataTable/DataTableFilter'
 import useTodoDataGrid from '@/app/todo/hooks/useTodoDataGrid'
 import TodoDataTableToolbar from '@/app/todo/components/todoDataGrid/TodoDataTableToolbar'
 

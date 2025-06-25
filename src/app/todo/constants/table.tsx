@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Todo } from '@/app/todo/types/model'
-import SelectColumnCell from '@/components/ui/dataTable/SelectColumnCell'
+import SelectColumnCell from '@/components/ui/DataTable/SelectColumnCell'
 import TodoDoneCell from '@/app/todo/components/todoDataGrid/TodoDoneCell'
 import TodoActionCell from '@/app/todo/components/todoDataGrid/TodoActionCell'
 import { Badge } from '@/components/ui/Badge'
