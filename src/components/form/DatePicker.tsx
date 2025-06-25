@@ -33,7 +33,7 @@ const DatePicker = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" {...buttonProps}>
+        <Button variant="outline" {...buttonProps} aria-label="Pick a date">
           {selectedDate.toLocaleDateString()}
           <CalendarIcon className="size-4" />
         </Button>

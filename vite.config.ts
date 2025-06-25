@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
-import { defineConfig } from 'vitest/config'
+import { defineConfig, configDefaults } from 'vitest/config'
 import { fileURLToPath } from 'node:url'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 
@@ -23,11 +23,11 @@ export default defineConfig({
     setupFiles: './src/test/setup.ts',
     projects: [
       {
+        extends: true,
         test: {
-          name: 'unit',
-          environment: 'jsdom',
-          include: ['src/**/*.test.{ts,tsx}'],
-          exclude: ['src/**/*.stories.tsx'],
+          name: 'default',
+          include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+          exclude: [...configDefaults.exclude, '**/*.stories.tsx'],
         },
       },
       {
@@ -50,6 +50,7 @@ export default defineConfig({
             ],
           },
           setupFiles: ['.storybook/vitest.setup.ts'],
+          include: ['src/**/*.stories.tsx'],
         },
       },
     ],

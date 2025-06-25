@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHook, act } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import useTodoForm from './useTodoForm'
+import useTodoForm from '@/app/todo/hooks/useTodoForm'
 import useCreateTodo from '@/app/todo/api/mutations/useCreateTodo'
 import useUpdateTodo from '@/app/todo/api/mutations/useUpdateTodo'
 import { Todo } from '@/app/todo/types/model'
@@ -44,7 +45,7 @@ describe('useTodoForm', () => {
     vi.clearAllMocks()
   })
 
-  it('should initialize with empty form for new todo', () => {
+  it('새로운 할 일을 추가할 때 빈 폼으로 초기화된다', () => {
     const { result } = renderHook(() => useTodoForm(), {
       wrapper: createWrapper(),
     })
@@ -55,7 +56,7 @@ describe('useTodoForm', () => {
     })
   })
 
-  it('should initialize with existing todo data', () => {
+  it('기존 값으로 상태가 초기화 된다.', () => {
     const existingTodo = {
       id: 1,
       text: 'Existing todo',
@@ -73,7 +74,7 @@ describe('useTodoForm', () => {
     })
   })
 
-  it('should show validation error when text is empty', async () => {
+  it('text가 비어있을 때 유효성 검사 오류가 표시된다', async () => {
     const { result } = renderHook(() => useTodoForm(), {
       wrapper: createWrapper(),
     })
@@ -92,7 +93,7 @@ describe('useTodoForm', () => {
     expect(mockCreateTodo).toHaveBeenCalledTimes(0)
   })
 
-  it('should show validation error when deadline is in the past', async () => {
+  it('deadline이 과거일 때 유효성 검사 오류가 표시된다', async () => {
     const { result } = renderHook(() => useTodoForm(), {
       wrapper: createWrapper(),
     })
@@ -119,7 +120,7 @@ describe('useTodoForm', () => {
     expect(mockCreateTodo).toHaveBeenCalledTimes(0)
   })
 
-  it('should call createTodo when submitting new todo', async () => {
+  it('새로운 값을 제출할 때 createTodo가 호출된다', async () => {
     const onSuccess = vi.fn()
 
     const { result } = renderHook(() => useTodoForm({ onSuccess }), {
@@ -151,7 +152,7 @@ describe('useTodoForm', () => {
     )
   })
 
-  it('should call updateTodo when submitting existing todo', async () => {
+  it('기존 값이 있는 상태에서 제출할 때 updateTodo가 호출된다', async () => {
     const existingTodo = {
       id: 1,
       text: 'Existing todo',
@@ -194,7 +195,7 @@ describe('useTodoForm', () => {
     )
   })
 
-  it('should call onSuccess callback after successful creation', async () => {
+  it('create 성공 후 onSuccess 콜백이 호출된다.', async () => {
     const onSuccess = vi.fn()
 
     mockCreateTodo.mockImplementation((data, options) => {
@@ -223,7 +224,7 @@ describe('useTodoForm', () => {
     expect(onSuccess).toHaveBeenCalled()
   })
 
-  it('should call onSuccess callback after successful update', async () => {
+  it('update 성공 후 onSuccess 콜백이 호출된다.', async () => {
     const existingTodo = {
       id: 1,
       text: 'Existing todo',

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { userEvent, within, expect } from '@storybook/test'
-import TodoEditDialog from './TodoEditDialog'
+import { userEvent, within, expect, screen, waitFor } from '@storybook/test'
+import TodoEditDialog from '@/app/todo/components/dialog/TodoEditDialog'
 import { Button } from '@/components/ui/Button'
 import { Todo } from '@/app/todo/types/model'
 import { withQueryClient } from '@/test/queryClient'
@@ -30,7 +30,7 @@ const expiredTodo: Todo = {
 }
 
 const meta: Meta<typeof TodoEditDialog> = {
-  title: 'TodoApp/TodoEditDialog',
+  title: 'APP/Todo/Dialog/TodoEditDialog',
   component: TodoEditDialog,
   parameters: {
     layout: 'centered',
@@ -50,8 +50,6 @@ const meta: Meta<typeof TodoEditDialog> = {
 export default meta
 type Story = StoryObj<typeof TodoEditDialog>
 
-// --- 스토리 정의 ---
-
 export const Default: Story = {
   name: '기본 편집',
   args: {
@@ -63,10 +61,10 @@ export const Default: Story = {
 
     await userEvent.click(canvas.getByRole('button', { name: 'Edit' }))
 
-    const dialog = await canvas.findByRole('dialog')
+    const dialog = await within(document.body).findByRole('dialog')
     expect(dialog).toBeInTheDocument()
 
-    const textInput = canvas.getByDisplayValue('기존 할 일')
+    const textInput = await within(dialog).findByDisplayValue('기존 할 일')
     expect(textInput).toBeInTheDocument()
   },
   parameters: {
@@ -89,8 +87,9 @@ export const EditText: Story = {
     const canvas = within(canvasElement)
 
     await userEvent.click(canvas.getByRole('button', { name: 'Edit Text' }))
-
-    const textInput = canvas.getByDisplayValue('기존 할 일')
+    const textInput = await within(document.body).findByDisplayValue(
+      '기존 할 일'
+    )
 
     await userEvent.clear(textInput)
     await userEvent.type(textInput, '수정된 할 일')
@@ -119,12 +118,18 @@ export const EmptyTextValidation: Story = {
       canvas.getByRole('button', { name: 'Test Validation' })
     )
 
-    const textInput = canvas.getByDisplayValue('기존 할 일')
-
+    const textInput = await within(document.body).findByDisplayValue(
+      '기존 할 일'
+    )
     await userEvent.clear(textInput)
-    await userEvent.click(canvas.getByRole('button', { name: 'Edit' }))
 
-    expect(canvas.getByText('Todo text is required')).toBeInTheDocument()
+    await userEvent.click(
+      within(document.body).getByRole('button', { name: 'Edit' })
+    )
+
+    expect(
+      within(document.body).getByText('Todo text is required')
+    ).toBeInTheDocument()
   },
   parameters: {
     docs: {
@@ -150,7 +155,9 @@ export const LongText: Story = {
     )
 
     // 긴 텍스트가 제대로 표시되는지 확인
-    const textInput = canvas.getByDisplayValue(longTextTodo.text)
+    const textInput = await within(document.body).findByDisplayValue(
+      longTextTodo.text
+    )
     expect(textInput).toBeInTheDocument()
   },
   parameters: {
@@ -173,7 +180,15 @@ export const ExpiredTodo: Story = {
 
     await userEvent.click(canvas.getByRole('button', { name: 'Edit Expired' }))
 
-    expect(canvas.getByText('Deadline is in the past')).toBeInTheDocument()
+    await userEvent.click(
+      within(document.body).getByRole('button', { name: 'Edit' })
+    )
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Deadline cannot be in the past')
+      ).toBeInTheDocument()
+    })
   },
   parameters: {
     docs: {
@@ -197,16 +212,18 @@ export const InteractionFlow: Story = {
       canvas.getByRole('button', { name: 'Complete Edit Flow' })
     )
 
-    const textInput = canvas.getByDisplayValue('기존 할 일')
+    const textInput = await within(document.body).findByDisplayValue(
+      '기존 할 일'
+    )
     await userEvent.clear(textInput)
     await userEvent.type(textInput, '완전히 새로운 할 일')
 
-    const datePickerButton = canvas.getByRole('button', {
-      name: /pick a date/i,
-    })
+    const datePickerButton = within(document.body).getByLabelText('Pick a date')
     await userEvent.click(datePickerButton)
 
-    await userEvent.click(canvas.getByRole('button', { name: 'Edit' }))
+    await userEvent.click(
+      within(document.body).getByRole('button', { name: 'Edit' })
+    )
   },
   parameters: {
     docs: {

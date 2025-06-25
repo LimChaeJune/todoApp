@@ -1,26 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import TodoForm from '@/app/todo/components/todoForm'
+import { withQueryClient } from '@/test/queryClient'
 
-// --- 메타데이터 및 데코레이터 설정 ---
 const meta: Meta<typeof TodoForm> = {
-  title: 'TodoApp/TodoForm (Actual)',
+  title: 'APP/Todo/TodoForm',
   component: TodoForm,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  decorators: [
-    (Story) => {
-      const queryClient = new QueryClient()
-      return (
-        <QueryClientProvider client={queryClient}>
-          <Story />
-        </QueryClientProvider>
-      )
-    },
-  ],
+  decorators: [withQueryClient()],
 }
 
 export default meta
